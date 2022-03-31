@@ -9,18 +9,19 @@ const categoryRoute = require("./routes/categories");
 const multer = require("multer");
 const path = require("path");
 
-// import authRoute from "./routes/auth";
+// add this to package.json in client folder
+// "proxy": "http://localhost:5000/api/"
 
 dotenv.config();
-app.use(express.json());
-
-// (url prefix, file path)
-app.use("/images", express.static(path.join(__dirname, "/images")));
 
 mongoose
   .connect(process.env.MONGO_URL)
   .then(console.log("Connected to MONGODB"))
   .catch((err) => console.log(err));
+app.use(express.json());
+
+// (url prefix, file path)
+app.use("/images", express.static(path.join(__dirname, "/images")));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -41,6 +42,12 @@ app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/categories", categoryRoute);
 
-app.listen("5000", () => {
+const PORT = process.env.PORT || "5000";
+
+app.get("/", (req, res) => {
+  res.send("Connected to '/'");
+});
+
+app.listen(PORT, () => {
   console.log("Backend is running");
 });
