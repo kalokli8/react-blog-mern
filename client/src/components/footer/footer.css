@@ -1,0 +1,16 @@
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.footerTextContainer {
+}
+
+.footerText {
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+
+.footerText2 {
+}
